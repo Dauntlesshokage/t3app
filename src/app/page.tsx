@@ -2,11 +2,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { db } from "~/server/db";
 import Link from "next/link";
+import { SignedOut, SignedIn, UserButton } from "@clerk/nextjs";
 
 export const dynamic = "force-dynamic";
-
-export default async function HomePage() {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+export async function Images() {
   const images = await db.query.images.findMany({
     orderBy: (model, { desc }) => desc(model.id),
   });
@@ -21,6 +20,20 @@ export default async function HomePage() {
           </div>
         ))}
       </div>
+    </main>
+  );
+}
+export default async function HomePage() {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+
+  return (
+    <main>
+      <SignedOut>
+        <div className="h-full w-full text-center text-2xl">Please Sign In</div>
+      </SignedOut>
+      <SignedIn>
+        <Images />
+      </SignedIn>
     </main>
   );
 }
