@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { db } from "~/server/db";
-import Link from "next/link";
+import Image from "next/image";
 import { SignedOut, SignedIn, UserButton } from "@clerk/nextjs";
 import { getMyImages } from "../server/queries";
+import { object } from "zod";
 
 export const dynamic = "force-dynamic";
 export async function Images() {
@@ -11,10 +12,16 @@ export async function Images() {
 
   return (
     <main className="">
-      <div className="flex flex-wrap gap-4">
+      <div className="flex flex-wrap justify-center gap-4">
         {images.map((image) => (
-          <div key={image.id} className="flex w-48 flex-col">
-            <img src={image.url} alt="image" />
+          <div key={image.id} className="flex h-48 w-48 flex-col">
+            <Image
+              src={image.url}
+              style={{ objectFit: "contain" }}
+              width={192}
+              height={192}
+              alt="image"
+            />
             <div>{image.name}</div>
           </div>
         ))}
