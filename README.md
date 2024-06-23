@@ -5,3 +5,4 @@
 - [x] Setup Postgres vercel Database
 - [x] Added database to UI
 - [x] Added Authentication
+- [x] Added Image upload feature
