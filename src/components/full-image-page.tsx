@@ -1,8 +1,10 @@
 import React from "react";
-import { getImage } from "../server/queries";
+import { deleteImage, getImage } from "../server/queries";
 import { clerkClient } from "@clerk/nextjs/server";
+import { Button } from "../components/ui/button";
 
 async function FullPageImageView(props: { id: number }) {
+  const idAsNumber = props.id;
   const image = await getImage(props.id);
   const uploaderInfo = await clerkClient.users.getUser(image.userId);
   return (
@@ -19,6 +21,18 @@ async function FullPageImageView(props: { id: number }) {
         <div className="flex flex-col p-2">
           <span>Created On:</span>
           <span>{new Date(image.createdAt).toLocaleDateString()}</span>
+        </div>
+        <div className="flex flex-col p-2">
+          <form
+            action={async (e) => {
+              "use server";
+              await deleteImage(idAsNumber);
+            }}
+          >
+            <Button type="submit" variant="destructive">
+              Delete
+            </Button>
+          </form>
         </div>
       </div>
     </div>
