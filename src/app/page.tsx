@@ -5,6 +5,7 @@ import Image from "next/image";
 import { SignedOut, SignedIn, UserButton } from "@clerk/nextjs";
 import { getMyImages } from "../server/queries";
 import { object } from "zod";
+import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 export async function Images() {
@@ -15,13 +16,15 @@ export async function Images() {
       <div className="flex flex-wrap justify-center gap-4">
         {images.map((image) => (
           <div key={image.id} className="flex h-48 w-48 flex-col">
-            <Image
-              src={image.url}
-              style={{ objectFit: "contain" }}
-              width={192}
-              height={192}
-              alt="image"
-            />
+            <Link href={`/img/${image.id}`}>
+              <Image
+                src={image.url}
+                style={{ objectFit: "contain" }}
+                width={192}
+                height={192}
+                alt={image.name}
+              />
+            </Link>
             <div>{image.name}</div>
           </div>
         ))}
