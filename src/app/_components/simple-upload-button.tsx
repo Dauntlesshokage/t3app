@@ -83,6 +83,10 @@ export function SimpleUploadButton() {
         },
       );
     },
+    onUploadError(error) {
+      toast.error("Upload failed");
+      toast.dismiss("upload-begin");
+    },
     onClientUploadComplete() {
       toast.dismiss("upload-begin");
       toast(
